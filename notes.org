@@ -1,0 +1,78 @@
+* Getting started
+** Hello Triangle
+-A 2D pixel is an approximation of a point in 2D space, limited by the resolution of the screen.
+
+-The graphics pipeline takes 3D coords as input and transforms them into colored 2D pixels 
+on the screen.
+   
+-The graphics pipeline works like a chain where is each step requires the output of the previous 
+step.   
+
+-Shaders are small programs. Modern graphics cards process data by running shaders 
+ for each step of the pipeline.
+
+-Shaders are written in OpenGL shading language (GLSL).
+
+-The stages of the graphics pipeline are Vertex shader, Shape assembly (also called Primitive
+Assembly), Geometry shader, Tests and blending, Fragment shader and Rasterization.
+
+-Vertex, Geometry and Fragment shaders can be modified or replaced by developers.
+
+*** Stages of the graphics pipeline explained with a triangle
+
+We pass in a list of 3D coordinates that form a triangle in an array called Vertex Data.
+This vertex data is a collection of vertices. A vertex is a collection of vertex attributes
+per 3D coordinate. For now, the attributes are 3D position and color.
+
+OpenGL can render vertices with different render types. For example, data can be rendered as 
+points, triangles or a line. Every time we make a drawing call we have to choose a render type
+by choosing a primitive, such as GL_POINTS, GL_TRIANGLES and GL_LINE_STRIP. 
+
+**** Vertex shader
+Takes as input a single vertex. Its main goal is to apply transforms to 3D coordinates. It allows 
+some basic processing of vertex attributes. 
+
+This vertex must be defined by the developer.
+
+**** Shape / Primitive assembly 
+Takes as input all the vertices from the vertex shader that form a primitive. It assembles
+all the points in the primitive shape we have chosen, in this case a triangle.
+
+**** Geometry shader 
+Takes as input the output of the primitive assembly - the collection of vertices that form a 
+primitive. It has the ability to generate other shapes by emitting vertices to form primitives.
+In this case, it generates a second triangle. 
+
+This shader is usually left unmodified.
+
+**** Rasterization
+Takes as input the output of the geometry shader. It maps the primitives to its corresponding
+pixels on the final screen. 
+
+A fragment in OpenGL is all the data required to render a single pixel. Rasterization performs 
+clipping, discarding all fragments outside your view. Then, it returns the remaining fragments.
+
+**** Fragment shader 
+Takes as input the fragments returned by the rasterization stage. Its main purpose is to calculate
+the final color of a pixel. Usually, advanced effects happen here, as it contains data about
+the 3D scene -lights, light color, shadows...- that it uses to calculate the pixel's color.
+
+This vertex must be defined by the developer.
+
+**** Tests and blending
+After all color values have been determined, this stage checks the depth and stencil 
+of the fragment and uses them to check if the fragment is in front or behind other objects,
+and should be discarded.
+
+The stage also checks for alpha values and blends the objects. The pixel color calculated in
+the fragment shader could be different when rendering multiple triangles.
+
+
+
+
+** Shaders
+** Textures
+** Transformations
+** Coordinate Systems
+** Camera
+** Review
